@@ -2,7 +2,7 @@
 WordPress plugin that adds shortcodes for current, published, and last modified year and month.
 
 ## Purpose
-The main purpose of this plugin is to dynamically add dates to post titles. The shortcodes also work in meta descriptions (Rank Math and Yoast) and post content.
+The main purpose of this plugin is to dynamically add dates to post titles. The shortcodes also work in meta descriptions (Rank Math, Yoast, SEOPress) and post content.
 
 ## Available Shortcodes
 - **[currentmonth]** - current month
@@ -16,4 +16,5 @@ The main purpose of this plugin is to dynamically add dates to post titles. The 
 The WordPress Date Shortcodes plugin is compatible with:
 - Rank Math
 - Yoast SEO
+- SEOPress
 - Contextual Related Posts (CRP)
