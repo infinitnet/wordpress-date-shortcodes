@@ -1,5 +1,5 @@
 # WordPress Date Shortcodes
-WordPress plugin that adds shortcodes for current, published, and last modified year and month.
+WordPress plugin that adds shortcodes for current, published, and last modified year, month, and day.
 
 ## Purpose
 The main purpose of this plugin is to dynamically add dates to post titles. The shortcodes also work in meta descriptions (Rank Math, Yoast, SEOPress) and post content.
