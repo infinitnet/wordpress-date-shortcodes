@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 /**
  * Plugin Name: WordPress Date Shortcodes
  * Description: Adds shortcodes for current, published, and last modified year and month.
@@ -47,29 +51,8 @@ if ( ! function_exists( 'infinitnet_date_shortcode' ) ) {
     }
 }
 
-// Year shortcodes
-add_shortcode( 'currentyear', function($atts) { return infinitnet_date_shortcode('current', 'Y', $atts); });
-add_shortcode( 'publishedyear', function($atts) { return infinitnet_date_shortcode('published', 'Y', $atts); });
-add_shortcode( 'modifiedyear', function($atts) { return infinitnet_date_shortcode('modified', 'Y', $atts); });
-
-// Month shortcodes
-add_shortcode( 'currentmonth', function($atts) { return infinitnet_date_shortcode('current', 'F', $atts); });
-add_shortcode( 'publishedmonth', function($atts) { return infinitnet_date_shortcode('published', 'F', $atts); });
-add_shortcode( 'modifiedmonth', function($atts) { return infinitnet_date_shortcode('modified', 'F', $atts); });
-
-// Day shortcodes
-add_shortcode( 'currentday', function($atts) {
-    $day_format = preg_match('/[jS]/', get_option('date_format'), $day_only_format) ? $day_only_format[0] : 'j';
-    return infinitnet_date_shortcode('current', $day_format, $atts);
-});
-add_shortcode( 'publishedday', function($atts) {
-    $day_format = preg_match('/[jS]/', get_option('date_format'), $day_only_format) ? $day_only_format[0] : 'j';
-    return infinitnet_date_shortcode('published', $day_format, $atts);
-});
-add_shortcode( 'modifiedday', function($atts) {
-    $day_format = preg_match('/[jS]/', get_option('date_format'), $day_only_format) ? $day_only_format[0] : 'j';
-    return infinitnet_date_shortcode('modified', $day_format, $atts);
-});
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-date-shortcodes.php';
+Date_Shortcodes::register_shortcodes();
 
 // Unified function to process meta content with shortcodes
 function infinitnet_process_meta_content( $content ) {
