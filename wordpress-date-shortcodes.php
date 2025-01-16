@@ -80,3 +80,13 @@ function infinitnet_process_all_titles( $title ) {
     return $title;
 }
 add_filter( 'the_title', 'infinitnet_process_all_titles' );
+
+// Process shortcodes in Rank Math breadcrumbs
+add_filter('rank_math/frontend/breadcrumb/items', function($crumbs, $class) {
+    foreach ($crumbs as &$crumb) {
+        if (isset($crumb[0])) {
+            $crumb[0] = infinitnet_process_meta_content($crumb[0]);
+        }
+    }
+    return $crumbs;
+}, 10, 2);
