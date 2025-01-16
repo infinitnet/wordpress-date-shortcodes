@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Author URI: https://infinitnet.io/
  * Plugin URI: https://github.com/infinitnet/wordpress-date-shortcodes
  * Update URI: https://github.com/infinitnet/wordpress-date-shortcodes
- * Version: 1.3.1
+ * Version: 1.3.2
  * License: GPLv3
  * Text Domain: wordpress-date-shortcodes
  */
