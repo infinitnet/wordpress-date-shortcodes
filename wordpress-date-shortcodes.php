@@ -74,8 +74,11 @@ add_filter('crp_thumb_alt', 'do_shortcode');
 
 // Filter for processing shortcodes in all titles
 function infinitnet_process_all_titles( $title ) {
-    if ( ! is_admin() ) {
-        return do_shortcode( $title );
+    static $processing = false;
+    if ( ! is_admin() && ! $processing ) {
+        $processing = true;
+        $title = do_shortcode( $title );
+        $processing = false;
     }
     return $title;
 }
