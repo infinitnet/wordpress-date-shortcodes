@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Author URI: https://infinitnet.io/
  * Plugin URI: https://github.com/infinitnet/wordpress-date-shortcodes
  * Update URI: https://github.com/infinitnet/wordpress-date-shortcodes
- * Version: 1.3.2
+ * Version: 1.3.5
  * License: GPLv3
  * Text Domain: wordpress-date-shortcodes
  */
@@ -23,28 +23,34 @@ if ( ! function_exists( 'infinitnet_date_shortcode' ) ) {
 
         switch ( $type ) {
             case 'current':
-                if ($format == 'Y') {
-                    $adjusted_date = strtotime("$adjustment year");
-                } elseif ($format == 'F') {
-                    $adjusted_date = strtotime("$adjustment month");
-                } else {
-                    $adjusted_date = strtotime("$adjustment day");
-                }
-                $date = date_i18n($format, $adjusted_date);
+                $date_obj = new DateTime('now', new DateTimeZone(wp_timezone_string()));
+                $date_obj->modify("$adjustment days");
+                $date = date_i18n($format, $date_obj->getTimestamp());
                 break;
+            
             case 'published':
             case 'modified':
-                $post_date = ($type == 'published') ? get_the_date('Y-m-d', get_the_ID()) : get_the_modified_date('Y-m-d', get_the_ID());
-                if ($format == 'Y') {
-                    $date = date_i18n($format, strtotime("$post_date +$adjustment year"));
-                } elseif ($format == 'F') {
-                    $date = date_i18n($format, strtotime("$post_date +$adjustment month"));
-                } else {
-                    $date = date_i18n($format, strtotime("$post_date +$adjustment day"));
+                $post = get_post();
+                if (!$post || !$post->ID) {
+                    return apply_filters('infinitnet_date_empty', '', $type, $format);
                 }
+                
+                $date_string = ($type === 'published')
+                    ? $post->post_date
+                    : $post->post_modified;
+                
+                $date = DateTime::createFromFormat(
+                    'Y-m-d H:i:s',
+                    $date_string,
+                    new DateTimeZone('UTC')
+                )->setTimezone(new DateTimeZone(wp_timezone_string()));
+                
+                $date->modify("$adjustment days");
+                $date = date_i18n($format, $date->getTimestamp());
                 break;
+            
             default:
-                $date = '';
+                return '';
         }
 
         return $date;
